@@ -85,7 +85,25 @@
   .price .t{font-size:.84rem;color:var(--ink-2)}
   .price .t strong{color:var(--ink);font-weight:600}
   .price .note{grid-column:1/-1;font-size:.76rem;color:var(--ink-3)}
-  .price .note.alt{color:var(--ink-2);padding-top:6px;border-top:1px dashed var(--line)}
+  .options{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 18px}
+  .opt{display:flex;flex-direction:column;gap:8px;padding:18px 18px 16px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.35)}
+  .opt-head{display:flex;align-items:center;gap:10px;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .opt-head .k{display:inline-grid;place-items:center;padding:4px 9px;border-radius:999px;background:var(--gold);color:#fff;font-size:.66rem;letter-spacing:.14em}
+  .opt-room{font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.25;color:var(--ink-2)}
+  .opt .n{font-family:var(--serif);font-size:2.1rem;line-height:1;font-weight:500;font-variant-numeric:tabular-nums;margin-top:4px}
+  .opt .n small{font-family:var(--sans);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-left:6px}
+  .opt .t{font-size:.84rem;color:var(--ink-2)}
+  .opt .t strong{color:var(--ink);font-weight:600}
+  .opt .note{font-size:.76rem;color:var(--ink-3);flex:1}
+  .opt .btn{align-self:flex-start;margin-top:4px}
+  .perks{margin:0 0 20px;font-size:.82rem;color:var(--ink-2)}
+  .perks:empty{display:none}
+  .perks .row{display:grid;grid-template-columns:120px 1fr;gap:6px 14px;padding:8px 0;border-top:1px solid var(--line)}
+  .perks .row:last-child{border-bottom:1px solid var(--line)}
+  .perks .lbl{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);padding-top:3px}
+  .perks .yes{color:var(--ink);font-weight:600}
+  .perks .no{color:var(--ink-3)}
+  @media (max-width:1100px){.options{grid-template-columns:1fr}}
   .score{display:inline-flex;align-items:center;gap:10px;margin:0 0 22px;font-size:.82rem;color:var(--ink-2)}
   .score b{display:inline-grid;place-items:center;min-width:44px;height:30px;padding:0 8px;border-radius:8px;background:var(--ink);color:var(--cream);font-weight:600;font-variant-numeric:tabular-nums}
   .score a{color:var(--ink-2)}
@@ -151,9 +169,9 @@
   <img src="img/hero-flamenco.jpg" alt="Aerial view of Flamenco Beach, Culebra, Puerto Rico" loading="eager" fetchpriority="high">
   <div class="scrim"></div>
   <div class="content">
-    <p class="eyebrow rise d1">23 to 27 December 2026 · Two adults, two children</p>
+    <p class="rise d1 eyebrow">December 2026 · Two families · Two adults and two children each</p>
     <h1 class="rise d2">Six ways to spend <em>Christmas</em> in Puerto Rico</h1>
-    <p class="rise d3">Every stay below has a bedroom for the grown-ups and a separate space for the kids. Priced for four nights, mapped, and linked to the exact room.</p>
+    <p class="rise d3">Every stay below has a bedroom for the grown-ups and a separate space for the kids. Priced two ways, Stay A for 23 to 27 December and Stay B for 21 to 29, mapped, and linked to the exact room.</p>
     <a class="cta rise d4" href="#stays">See the shortlist <span aria-hidden="true">↓</span></a>
   </div>
   <div class="credit">Flamenco Beach, Culebra. Photo: <a href="https://commons.wikimedia.org/wiki/File:Flamenco_Beach,_Culebra_Island,_Puerto_Rico.jpg" target="_blank" rel="noopener">Breezy Baldwin, CC BY 2.0</a></div>
@@ -166,7 +184,7 @@
         <p class="eyebrow">The Shortlist</p>
         <h2>Six rooms, in order of preference</h2>
       </div>
-      <p class="meta">Rates pulled 3 September 2026 for Wed 23 to Sun 27 Dec. Holiday-week prices move; the booking links show today's number.</p>
+      <p class="meta">Rates pulled 3 September 2026. Stay A is Wed 23 to Sun 27 Dec (4 nights); Stay B is Mon 21 to Tue 29 Dec (8 nights). Holiday-week prices move; the booking links show today's number.</p>
     </div>
 
     <!-- 1 -->
@@ -178,17 +196,28 @@
       <div class="stay-body">
         <p class="where">Fajardo · 71 minutes from SJU</p>
         <h3><a href="https://www.lascasitasvillage.com/" target="_blank" rel="noopener">Las Casitas Village at El Conquistador</a></h3>
-        <p class="room">Luxury Villa, One Bedroom, Garden View</p>
         <ul class="facts"><li>King bedroom + living room with large twin sofa bed</li><li>Sleeps 4</li><li>Butler service</li><li>Water park and Palomino Island ferry</li></ul>
-        <div class="price">
-          <div class="n">$761<small>per night</small></div>
-          <div class="t"><strong>$3,862 total</strong> for four nights, taxes and resort fee included<br>$3,317 due today, $545 at the property</div>
-          <div class="note">Fully refundable until 20 December. Resort fee $125 per night.</div>
-          <div class="note alt">21 to 29 December: this villa isn't offered; the 1-BR Ocean View villa is $1,024 per night, $10,023 all in for eight nights.</div>
+        <div class="options">
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay A</span>23 to 27 December · 4 nights</div>
+            <div class="opt-room">Luxury Villa, One Bedroom, Garden View</div>
+            <div class="n">$761<small>per night</small></div>
+            <div class="t"><strong>$3,862 all in</strong>, taxes and resort fee included. $3,317 due today, $545 at the property.</div>
+            <div class="note">Fully refundable until 20 December. Resort fee $125 per night.</div>
+            <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Las-Casitas-Village-At-El-Conquistador.h91562080.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book 23 to 27 Dec</a>
+          </div>
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay B</span>21 to 29 December · 8 nights</div>
+            <div class="opt-room">Luxury Villa, One Bedroom, Ocean View (the Garden View villa isn't offered for these dates)</div>
+            <div class="n">$1,024<small>per night</small></div>
+            <div class="t"><strong>$10,023 all in</strong>, taxes and resort fee included.</div>
+            <div class="note">Fully refundable until 18 December. Two left at this rate. 840 sq ft, king bedroom + living room with sofa bed.</div>
+            <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Las-Casitas-Village-At-El-Conquistador.h91562080.Hotel-Information?chkin=2026-12-21&chkout=2026-12-29&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book 21 to 29 Dec</a>
+          </div>
         </div>
+        <div class="perks" data-perks="0"></div>
         <div class="score"><b>9.2</b> Wonderful · 279 Expedia reviews · <a href="https://www.google.com/maps/search/?api=1&query=Las+Casitas+Village+at+El+Conquistador+Fajardo" target="_blank" rel="noopener">Google reviews</a></div>
         <div class="actions">
-          <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Las-Casitas-Village-At-El-Conquistador.h91562080.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book on Expedia</a>
           <a class="btn" href="https://www.lascasitasvillage.com/" target="_blank" rel="noopener">Hotel site</a>
           <button class="btn map" data-fly="0">Show on map</button>
         </div>
@@ -204,17 +233,28 @@
       <div class="stay-body">
         <p class="where">Río Grande · 30 minutes from SJU</p>
         <h3><a href="https://www.hyatt.com/hyatt-regency/en-US/sjurc-hyatt-regency-grand-reserve-puerto-rico" target="_blank" rel="noopener">Hyatt Regency Grand Reserve</a></h3>
-        <p class="room">Deluxe Villa, One King Bed</p>
         <ul class="facts"><li>689 sq ft</li><li>King bedroom + living area with sleeper sofa</li><li>Sleeps 4</li><li>Largest lagoon pool on the island</li></ul>
-        <div class="price">
-          <div class="n">$1,091<small>per night</small></div>
-          <div class="t"><strong>$5,613 total</strong> for four nights, taxes and resort fee included<br>$4,757 due today, $856 at the property</div>
-          <div class="note">Non-refundable rate. Resort fee $196 per night. A refundable rate runs about $140 more per night.</div>
-          <div class="note alt">21 to 29 December: same villa $1,102 per night, $11,340 all in for eight nights.</div>
+        <div class="options">
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay A</span>23 to 27 December · 4 nights</div>
+            <div class="opt-room">Deluxe Villa, One King Bed</div>
+            <div class="n">$1,091<small>per night</small></div>
+            <div class="t"><strong>$5,613 all in</strong>, taxes and resort fee included. $4,757 due today, $856 at the property.</div>
+            <div class="note">Non-refundable rate. Resort fee $196 per night. A refundable rate runs about $140 more per night.</div>
+            <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Hyatt-Regency-Grand-Reserve-Puerto-Rico.h979694.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book 23 to 27 Dec</a>
+          </div>
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay B</span>21 to 29 December · 8 nights</div>
+            <div class="opt-room">Deluxe Villa, One King Bed</div>
+            <div class="n">$1,102<small>per night</small></div>
+            <div class="t"><strong>$11,340 all in</strong>, taxes and resort fee included.</div>
+            <div class="note">Non-refundable rate; the flexible rate is $1,229 per night. The larger Premier Villa (1,075 sq ft, separate living room) is $1,245 per night, $12,813 all in.</div>
+            <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Hyatt-Regency-Grand-Reserve-Puerto-Rico.h979694.Hotel-Information?chkin=2026-12-21&chkout=2026-12-29&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book 21 to 29 Dec</a>
+          </div>
         </div>
+        <div class="perks" data-perks="1"></div>
         <div class="score"><b>9.2</b> Wonderful · 3,356 Expedia reviews · <a href="https://www.google.com/maps/search/?api=1&query=Hyatt+Regency+Grand+Reserve+Puerto+Rico" target="_blank" rel="noopener">Google reviews</a></div>
         <div class="actions">
-          <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Hyatt-Regency-Grand-Reserve-Puerto-Rico.h979694.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book on Expedia</a>
           <a class="btn" href="https://www.hyatt.com/hyatt-regency/en-US/sjurc-hyatt-regency-grand-reserve-puerto-rico" target="_blank" rel="noopener">Hotel site</a>
           <button class="btn map" data-fly="1">Show on map</button>
         </div>
@@ -231,17 +271,28 @@
       <div class="stay-body">
         <p class="where">San Juan · 15 minutes from SJU</p>
         <h3><a href="https://www.caribehilton.com/" target="_blank" rel="noopener">Caribe Hilton</a></h3>
-        <p class="room">Premium Suite, Panoramic Garden View, One King</p>
         <ul class="facts"><li>850 sq ft</li><li>Separate living room</li><li>Sleeps 4</li><li>Walk to Old San Juan</li></ul>
-        <div class="price">
-          <div class="n">$1,436<small>per night</small></div>
-          <div class="t"><strong>$6,480 total</strong> for four nights, taxes and resort fee included<br>$6,262 due today, $218 at the property</div>
-          <div class="note">Non-refundable rate. Resort fee $50 per night, the lowest on this list.</div>
-          <div class="note alt">21 to 29 December: same suite $1,296 per night, $11,741 all in for eight nights.</div>
+        <div class="options">
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay A</span>23 to 27 December · 4 nights</div>
+            <div class="opt-room">Premium Suite, Panoramic Garden View, One King</div>
+            <div class="n">$1,436<small>per night</small></div>
+            <div class="t"><strong>$6,480 all in</strong>, taxes and resort fee included. $6,262 due today, $218 at the property.</div>
+            <div class="note">Non-refundable rate. Resort fee $50 per night, the lowest on this list.</div>
+            <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Caribe-Hilton.h9228.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book 23 to 27 Dec</a>
+          </div>
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay B</span>21 to 29 December · 8 nights</div>
+            <div class="opt-room">Premium Suite, Panoramic Garden View, One King</div>
+            <div class="n">$1,296<small>per night</small></div>
+            <div class="t"><strong>$11,741 all in</strong>, taxes and resort fee included.</div>
+            <div class="note">Non-refundable rate; the flexible rate is $1,621 per night. The smaller Junior Suite with sofa bed is $915 per night, $8,414 all in.</div>
+            <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Caribe-Hilton.h9228.Hotel-Information?chkin=2026-12-21&chkout=2026-12-29&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book 21 to 29 Dec</a>
+          </div>
         </div>
+        <div class="perks" data-perks="2"></div>
         <div class="score"><b>8.6</b> Excellent · 3,089 Expedia reviews · <a href="https://www.google.com/maps/search/?api=1&query=Caribe+Hilton+San+Juan" target="_blank" rel="noopener">Google reviews</a></div>
         <div class="actions">
-          <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Caribe-Hilton.h9228.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book on Expedia</a>
           <a class="btn" href="https://www.caribehilton.com/" target="_blank" rel="noopener">Hotel site</a>
           <button class="btn map" data-fly="2">Show on map</button>
         </div>
@@ -257,17 +308,28 @@
       <div class="stay-body">
         <p class="where">Condado · 12 minutes from SJU</p>
         <h3><a href="https://www.condadovanderbilt.com/" target="_blank" rel="noopener">Condado Vanderbilt Hotel</a></h3>
-        <p class="room">King Suite with Ocean View</p>
         <ul class="facts"><li>King bedroom + separate living room with sofa bed</li><li>Sleeps 4</li><li>Children under 12 stay free</li><li>Beachfront, 1919 landmark</li></ul>
-        <div class="price">
-          <div class="n">$1,260<small>per night</small></div>
-          <div class="t"><strong>$6,046</strong> for four nights, resort fee included<br>Plus 11% room tax, about $665, for roughly <strong>$6,711 all in</strong></div>
-          <div class="note">Free cancellation until 21 December. Breakfast optional at $45 per person.</div>
-          <div class="note alt">21 to 29 December: same suite $1,255 per night, $12,043 plus tax, about $13,370 all in for eight nights.</div>
+        <div class="options">
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay A</span>23 to 27 December · 4 nights</div>
+            <div class="opt-room">King Suite with Ocean View</div>
+            <div class="n">$1,260<small>per night</small></div>
+            <div class="t"><strong>$6,046</strong> with resort fee, plus 11% room tax (about $665), roughly <strong>$6,711 all in</strong>.</div>
+            <div class="note">Free cancellation until 21 December. Breakfast optional at $45 per person.</div>
+            <a class="btn primary" href="https://www.booking.com/hotel/pr/condado-vanderbilt-san-juan2.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book 23 to 27 Dec</a>
+          </div>
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay B</span>21 to 29 December · 8 nights</div>
+            <div class="opt-room">King Suite with Ocean View</div>
+            <div class="n">$1,255<small>per night</small></div>
+            <div class="t"><strong>$12,043</strong> with resort fee, plus 11% room tax (about $1,325), roughly <strong>$13,370 all in</strong>.</div>
+            <div class="note">Free cancellation until 19 December. Breakfast optional at $45 per person.</div>
+            <a class="btn primary" href="https://www.booking.com/hotel/pr/condado-vanderbilt-san-juan2.html?checkin=2026-12-21&checkout=2026-12-29&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book 21 to 29 Dec</a>
+          </div>
         </div>
+        <div class="perks" data-perks="3"></div>
         <div class="score"><b>8.4</b> Very Good · 374 Booking.com reviews · 9.4 on Expedia (1,841) · <a href="https://www.google.com/maps/search/?api=1&query=Condado+Vanderbilt+Hotel+San+Juan" target="_blank" rel="noopener">Google reviews</a></div>
         <div class="actions">
-          <a class="btn primary" href="https://www.booking.com/hotel/pr/condado-vanderbilt-san-juan2.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book on Booking.com</a>
           <a class="btn" href="https://www.condadovanderbilt.com/" target="_blank" rel="noopener">Hotel site</a>
           <button class="btn map" data-fly="3">Show on map</button>
         </div>
@@ -283,17 +345,28 @@
       <div class="stay-body">
         <p class="where">Río Grande · 35 minutes from SJU</p>
         <h3><a href="https://www.wyndhamriomar.com/" target="_blank" rel="noopener">Wyndham Grand Rio Mar</a></h3>
-        <p class="room">Discovery Suite</p>
         <ul class="facts"><li>1,274 sq ft</li><li>King bedroom, bunk-bed alcove for the kids, living room with sofa bed</li><li>Built for families</li><li>El Yunque next door, two golf courses</li></ul>
-        <div class="price">
-          <div class="n">$1,750<small>per night</small></div>
-          <div class="t"><strong>$8,679</strong> for four nights, resort fee included<br>Plus 11% room tax, about $955, for roughly <strong>$9,634 all in</strong></div>
-          <div class="note">Free cancellation until 11 November. Breakfast for the family adds $240 per night.</div>
-          <div class="note alt">21 to 29 December: the Discovery Suite isn't available; the Suite with Rainforest View is $1,120 per night, about $12,340 all in for eight nights.</div>
+        <div class="options">
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay A</span>23 to 27 December · 4 nights</div>
+            <div class="opt-room">Discovery Suite</div>
+            <div class="n">$1,750<small>per night</small></div>
+            <div class="t"><strong>$8,679</strong> with resort fee, plus 11% room tax (about $955), roughly <strong>$9,634 all in</strong>.</div>
+            <div class="note">Free cancellation until 11 November. Breakfast for the family adds $240 per night.</div>
+            <a class="btn primary" href="https://www.booking.com/hotel/pr/wyndham-grand-rio-mar-beach-resort-amp-spa.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book 23 to 27 Dec</a>
+          </div>
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay B</span>21 to 29 December · 8 nights</div>
+            <div class="opt-room">Suite with Rainforest View (the Discovery Suite isn't available for these dates)</div>
+            <div class="n">$1,120<small>per night</small></div>
+            <div class="t"><strong>$11,114</strong> with resort fee, plus 11% room tax (about $1,225), roughly <strong>$12,340 all in</strong>.</div>
+            <div class="note">Free cancellation until 9 November. Ocean View Suite $1,220 per night, about $13,440 all in. Booking.com lists these suites at three adults; confirm two adults and two children by phone.</div>
+            <a class="btn primary" href="https://www.booking.com/hotel/pr/wyndham-grand-rio-mar-beach-resort-amp-spa.html?checkin=2026-12-21&checkout=2026-12-29&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book 21 to 29 Dec</a>
+          </div>
         </div>
+        <div class="perks" data-perks="4"></div>
         <div class="score"><b>8.8</b> Excellent · 400 Booking.com reviews · 8.6 on Expedia (2,282) · <a href="https://www.google.com/maps/search/?api=1&query=Wyndham+Grand+Rio+Mar+Rio+Grande+Puerto+Rico" target="_blank" rel="noopener">Google reviews</a></div>
         <div class="actions">
-          <a class="btn primary" href="https://www.booking.com/hotel/pr/wyndham-grand-rio-mar-beach-resort-amp-spa.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book on Booking.com</a>
           <a class="btn" href="https://www.wyndhamriomar.com/" target="_blank" rel="noopener">Hotel site</a>
           <button class="btn map" data-fly="4">Show on map</button>
         </div>
@@ -309,17 +382,28 @@
       <div class="stay-body">
         <p class="where">Condado · 12 minutes from SJU</p>
         <h3><a href="https://www.laconcharesort.com/" target="_blank" rel="noopener">La Concha Resort, Autograph Collection</a></h3>
-        <p class="room">One-Bedroom Deluxe King Suite with Sofa Bed, Ocean View</p>
         <ul class="facts"><li>King bedroom + living room with sofa bed</li><li>Kitchenette</li><li>Ocean-view balcony</li><li>Marriott Bonvoy</li></ul>
-        <div class="price">
-          <div class="n">$849<small>per night</small></div>
-          <div class="t"><strong>$3,654</strong> for four nights, resort fee included<br>Plus 11% room tax, about $402, for roughly <strong>$4,056 all in</strong></div>
-          <div class="note">Resort fee $65 per night. Cancellation terms vary by rate; check at booking.</div>
-          <div class="note alt">21 to 29 December: the Ocean View suite isn't available; the same suite with City View is $636 per night, about $6,220 all in for eight nights.</div>
+        <div class="options">
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay A</span>23 to 27 December · 4 nights</div>
+            <div class="opt-room">One-Bedroom Deluxe King Suite with Sofa Bed, Ocean View</div>
+            <div class="n">$849<small>per night</small></div>
+            <div class="t"><strong>$3,654</strong> with resort fee, plus 11% room tax (about $402), roughly <strong>$4,056 all in</strong>.</div>
+            <div class="note">Resort fee $65 per night. Cancellation terms vary by rate; check at booking.</div>
+            <a class="btn primary" href="https://www.booking.com/hotel/pr/la-concha-renaissance-san-juan-resort.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book 23 to 27 Dec</a>
+          </div>
+          <div class="opt">
+            <div class="opt-head"><span class="k">Stay B</span>21 to 29 December · 8 nights</div>
+            <div class="opt-room">One-Bedroom Deluxe King Suite with Sofa Bed, City View (the Ocean View suite isn't available for these dates)</div>
+            <div class="n">$636<small>per night</small></div>
+            <div class="t"><strong>$5,604</strong> with resort fee, plus 11% room tax (about $616), roughly <strong>$6,220 all in</strong>.</div>
+            <div class="note">Free cancellation until 18 December. Partial Ocean View version $686 per night, about $6,660 all in.</div>
+            <a class="btn primary" href="https://www.booking.com/hotel/pr/la-concha-renaissance-san-juan-resort.html?checkin=2026-12-21&checkout=2026-12-29&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book 21 to 29 Dec</a>
+          </div>
         </div>
+        <div class="perks" data-perks="5"></div>
         <div class="score"><b>8.9</b> Excellent · 493 Booking.com reviews · 4.4 on Google (6,500+) · <a href="https://www.google.com/maps/search/?api=1&query=La+Concha+Resort+San+Juan" target="_blank" rel="noopener">Google reviews</a></div>
         <div class="actions">
-          <a class="btn primary" href="https://www.booking.com/hotel/pr/la-concha-renaissance-san-juan-resort.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book on Booking.com</a>
           <a class="btn" href="https://www.laconcharesort.com/" target="_blank" rel="noopener">Hotel site</a>
           <button class="btn map" data-fly="5">Show on map</button>
         </div>
@@ -377,12 +461,12 @@
 <script>
 (function(){
   var stays=[
-    {n:1,name:"Las Casitas Village at El Conquistador",room:"Luxury Villa, One Bedroom, Garden View",price:"$761 / night · $3,862 total",lat:18.3589,lng:-65.6272,url:"https://www.expedia.com/San-Juan-Hotels-Las-Casitas-Village-At-El-Conquistador.h91562080.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6",area:"Fajardo"},
-    {n:2,name:"Hyatt Regency Grand Reserve",room:"Deluxe Villa, One King Bed",price:"$1,091 / night · $5,613 total",lat:18.4178,lng:-65.7942,url:"https://www.expedia.com/San-Juan-Hotels-Hyatt-Regency-Grand-Reserve-Puerto-Rico.h979694.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6",area:"Río Grande"},
-    {n:3,name:"Caribe Hilton",room:"Premium Suite, Panoramic Garden View",price:"$1,436 / night · $6,480 total",lat:18.4632,lng:-66.0855,url:"https://www.expedia.com/San-Juan-Hotels-Caribe-Hilton.h9228.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6",area:"San Juan"},
-    {n:4,name:"Condado Vanderbilt Hotel",room:"King Suite with Ocean View",price:"$1,260 / night · about $6,711 all in",lat:18.4576,lng:-66.0752,url:"https://www.booking.com/hotel/pr/condado-vanderbilt-san-juan2.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1",area:"Condado"},
-    {n:5,name:"Wyndham Grand Rio Mar",room:"Discovery Suite",price:"$1,750 / night · about $9,634 all in",lat:18.3885,lng:-65.7559,url:"https://www.booking.com/hotel/pr/wyndham-grand-rio-mar-beach-resort-amp-spa.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1",area:"Río Grande"},
-    {n:6,name:"La Concha Resort",room:"One-Bedroom Deluxe King Suite, Ocean View",price:"$849 / night · about $4,056 all in",lat:18.4573,lng:-66.0739,url:"https://www.booking.com/hotel/pr/la-concha-renaissance-san-juan-resort.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1",area:"Condado"}
+    {n:1,name:"Las Casitas Village at El Conquistador",room:"1-BR Luxury Villa",price:"$761 / night · Stay A $3,862 · Stay B $10,023 (ocean villa)",lat:18.3589,lng:-65.6272,url:"https://www.expedia.com/San-Juan-Hotels-Las-Casitas-Village-At-El-Conquistador.h91562080.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6",area:"Fajardo"},
+    {n:2,name:"Hyatt Regency Grand Reserve",room:"Deluxe Villa, One King Bed",price:"$1,091 / night · Stay A $5,613 · Stay B $11,340",lat:18.4178,lng:-65.7942,url:"https://www.expedia.com/San-Juan-Hotels-Hyatt-Regency-Grand-Reserve-Puerto-Rico.h979694.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6",area:"Río Grande"},
+    {n:3,name:"Caribe Hilton",room:"Premium Suite, Panoramic Garden View",price:"$1,436 / night · Stay A $6,480 · Stay B $11,741",lat:18.4632,lng:-66.0855,url:"https://www.expedia.com/San-Juan-Hotels-Caribe-Hilton.h9228.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6",area:"San Juan"},
+    {n:4,name:"Condado Vanderbilt Hotel",room:"King Suite with Ocean View",price:"$1,260 / night · Stay A about $6,711 · Stay B about $13,370",lat:18.4576,lng:-66.0752,url:"https://www.booking.com/hotel/pr/condado-vanderbilt-san-juan2.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1",area:"Condado"},
+    {n:5,name:"Wyndham Grand Rio Mar",room:"Discovery Suite (Stay A) · Rainforest View Suite (Stay B)",price:"$1,750 / night · Stay A about $9,634 · Stay B about $12,340",lat:18.3885,lng:-65.7559,url:"https://www.booking.com/hotel/pr/wyndham-grand-rio-mar-beach-resort-amp-spa.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1",area:"Río Grande"},
+    {n:6,name:"La Concha Resort",room:"1-BR Deluxe King Suite, Ocean View (Stay A) · City View (Stay B)",price:"$849 / night · Stay A about $4,056 · Stay B about $6,220",lat:18.4573,lng:-66.0739,url:"https://www.booking.com/hotel/pr/la-concha-renaissance-san-juan-resort.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1",area:"Condado"}
   ];
   var map=L.map('map',{scrollWheelZoom:false,zoomControl:true});
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Imagery &copy; Esri, Maxar, Earthstar Geographics'}).addTo(map);
