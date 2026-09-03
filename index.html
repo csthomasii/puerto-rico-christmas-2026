@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puerto Rico, Christmas Week</title>
+<meta name="description" content="Six family suites in Puerto Rico for 23 to 27 December 2026, priced and mapped.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+  :root{
+    --cream:#F6F1E8; --cream-2:#EFE8DB; --ink:#171411; --ink-2:#4A443D; --ink-3:#8A8175;
+    --line:rgba(23,20,17,.12); --gold:#9A7B4F; --gold-2:#B8955F;
+    --serif:"Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --sans:"Manrope", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(ellipse at 30% 10%, rgba(250,235,215,.55) 0%, transparent 55%), var(--cream);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  .grain::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.5;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E")}
+
+  /* nav */
+  .nav{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:28px clamp(20px,4vw,56px);color:#fff}
+  .nav .brand{font-family:var(--serif);font-size:1.35rem;letter-spacing:.02em;text-decoration:none}
+  .nav .links{display:flex;gap:28px;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
+  .nav .links a{text-decoration:none;opacity:.85;transition:opacity .3s}
+  .nav .links a:hover{opacity:1}
+  @media (max-width:640px){.nav .links{display:none}}
+
+  /* hero */
+  .hero{position:relative;min-height:100dvh;overflow:hidden;display:flex;align-items:flex-end;color:#fff}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 60%}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(to top, rgba(10,8,6,.78) 0%, rgba(10,8,6,.25) 45%, rgba(10,8,6,.30) 100%)}
+  .hero .content{position:relative;z-index:10;padding:0 clamp(20px,4vw,56px) clamp(40px,7vh,84px);max-width:1200px}
+  .eyebrow{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.72);margin:0 0 18px}
+  .hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(3rem,9vw,8.5rem);line-height:.92;letter-spacing:-.02em;margin:0;max-width:14ch;text-wrap:balance}
+  .hero h1 em{font-style:italic;font-weight:400}
+  .hero p{max-width:44ch;font-size:clamp(1rem,1.2vw,1.15rem);color:rgba(255,255,255,.82);margin:26px 0 34px}
+  .cta{display:inline-flex;align-items:center;gap:12px;min-height:46px;padding:0 28px;border-radius:999px;border:1px solid rgba(255,255,255,.35);color:#fff;text-decoration:none;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;backdrop-filter:blur(6px);transition:transform .5s var(--ease), background .5s var(--ease), box-shadow .5s var(--ease)}
+  .cta:hover{transform:translateY(-2px);background:rgba(255,255,255,.12);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+  .cta:active{transform:translateY(0) scale(.98)}
+  .hero .credit{position:absolute;right:16px;bottom:12px;z-index:10;font-size:.62rem;letter-spacing:.06em;color:rgba(255,255,255,.45)}
+  .hero .credit a{color:inherit}
+
+  /* entry motion */
+  .rise{opacity:0;transform:translateY(26px);filter:blur(6px);animation:rise .9s var(--ease) forwards}
+  .rise.d1{animation-delay:.10s}.rise.d2{animation-delay:.22s}.rise.d3{animation-delay:.34s}.rise.d4{animation-delay:.46s}
+  @keyframes rise{to{opacity:1;transform:none;filter:blur(0)}}
+  @media (prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none;filter:none}.reveal{opacity:1!important;transform:none!important}}
+
+  /* sections */
+  .section{padding:clamp(72px,10vw,140px) clamp(20px,4vw,56px)}
+  .wrap{max-width:1240px;margin:0 auto}
+  .section-head{display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;margin-bottom:clamp(40px,6vw,72px)}
+  .section-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(2.2rem,4.6vw,4.2rem);line-height:1;letter-spacing:-.015em;margin:0}
+  .section-head .eyebrow{color:var(--ink-3)}
+  .section-head .meta{font-size:.8rem;color:var(--ink-3);letter-spacing:.06em;text-align:right;max-width:32ch}
+  @media (max-width:720px){.section-head{grid-template-columns:1fr}.section-head .meta{text-align:left}}
+
+  /* stays */
+  .stay{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(28px,5vw,72px);align-items:center;padding:clamp(40px,6vw,80px) 0;border-top:1px solid var(--line)}
+  .stay:first-of-type{border-top:0;padding-top:0}
+  .stay:nth-of-type(even) .stay-media{order:2}
+  .stay-media{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3;background:var(--cream-2);box-shadow:0 30px 60px -30px rgba(23,20,17,.35)}
+  .stay-media img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+  .stay:hover .stay-media img{transform:scale(1.04)}
+  .stay-media .num{position:absolute;top:18px;left:18px;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:rgba(246,241,232,.92);color:var(--ink);font-family:var(--serif);font-size:1.55rem;font-weight:500;backdrop-filter:blur(4px)}
+  .stay-media .tag{position:absolute;bottom:16px;left:18px;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(23,20,17,.55);padding:8px 12px;border-radius:999px;backdrop-filter:blur(6px)}
+  .stay-body .where{font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin:0 0 12px}
+  .stay-body h3{font-family:var(--serif);font-weight:500;font-size:clamp(1.9rem,3.2vw,2.9rem);line-height:1.02;letter-spacing:-.01em;margin:0 0 6px}
+  .stay-body h3 a{text-decoration:none;border-bottom:1px solid transparent;transition:border-color .3s}
+  .stay-body h3 a:hover{border-color:var(--gold)}
+  .stay-body .room{font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--ink-2);margin:0 0 20px}
+  .facts{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.82rem;color:var(--ink-2);margin:0 0 22px;padding:0;list-style:none}
+  .facts li::before{content:"·";color:var(--gold);margin-right:8px}
+  .facts li:first-child::before{content:none}
+  .price{display:grid;grid-template-columns:auto 1fr;gap:6px 24px;align-items:baseline;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 20px}
+  .price .n{font-family:var(--serif);font-size:2.3rem;line-height:1;font-weight:500;font-variant-numeric:tabular-nums}
+  .price .n small{font-family:var(--sans);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-left:6px}
+  .price .t{font-size:.84rem;color:var(--ink-2)}
+  .price .t strong{color:var(--ink);font-weight:600}
+  .price .note{grid-column:1/-1;font-size:.76rem;color:var(--ink-3)}
+  .score{display:inline-flex;align-items:center;gap:10px;margin:0 0 22px;font-size:.82rem;color:var(--ink-2)}
+  .score b{display:inline-grid;place-items:center;min-width:44px;height:30px;padding:0 8px;border-radius:8px;background:var(--ink);color:var(--cream);font-weight:600;font-variant-numeric:tabular-nums}
+  .score a{color:var(--ink-2)}
+  .actions{display:flex;flex-wrap:wrap;gap:10px}
+  .btn{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;border-radius:999px;text-decoration:none;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);color:var(--ink);transition:transform .5s var(--ease), background .4s var(--ease), border-color .4s var(--ease), box-shadow .5s var(--ease)}
+  .btn:hover{transform:translateY(-2px);border-color:var(--ink);box-shadow:0 8px 24px -12px rgba(23,20,17,.5)}
+  .btn.primary{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+  .btn.primary:hover{background:#000}
+  .btn.map{cursor:pointer;background:transparent;font-family:inherit}
+  .caveat{margin:18px 0 0;padding:14px 16px;border-left:2px solid var(--gold);font-size:.8rem;color:var(--ink-2);background:rgba(154,123,79,.06);border-radius:0 10px 10px 0}
+  @media (max-width:860px){.stay{grid-template-columns:1fr}.stay:nth-of-type(even) .stay-media{order:0}}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease), transform .9s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* map */
+  .map-section{background:var(--ink);color:var(--cream);padding:clamp(72px,10vw,140px) 0 0}
+  .map-section .section-head{padding:0 clamp(20px,4vw,56px)}
+  .map-section .section-head .eyebrow,.map-section .section-head .meta{color:rgba(246,241,232,.6)}
+  .map-shell{position:relative}
+  #map{height:min(78vh,760px);width:100%;background:#0f0d0b}
+  .legend{position:absolute;z-index:500;top:16px;left:16px;display:flex;flex-direction:column;gap:6px;max-width:300px}
+  .legend button{display:flex;align-items:center;gap:12px;background:rgba(23,20,17,.86);color:var(--cream);border:1px solid rgba(246,241,232,.14);border-radius:12px;padding:9px 12px;text-align:left;cursor:pointer;font-family:var(--sans);font-size:.8rem;backdrop-filter:blur(8px);transition:background .3s,border-color .3s}
+  .legend button:hover,.legend button.active{background:rgba(246,241,232,.14);border-color:rgba(246,241,232,.35)}
+  .legend button .k{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:#fff;font-family:var(--serif);font-size:.95rem;font-weight:600;flex:none}
+  .legend button .s{font-size:.68rem;color:rgba(246,241,232,.62);display:block;letter-spacing:.06em}
+  @media (max-width:640px){.legend{position:static;flex-direction:row;overflow-x:auto;padding:12px;max-width:none;gap:8px}.legend button{flex:none}}
+  .pin{width:34px;height:34px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--gold);border:2px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.45);display:grid;place-items:center}
+  .pin span{transform:rotate(45deg);color:#fff;font-family:var(--serif);font-weight:600;font-size:1.05rem;line-height:1}
+  .leaflet-popup-content-wrapper{background:var(--cream);color:var(--ink);border-radius:14px;box-shadow:0 20px 40px -10px rgba(0,0,0,.5);font-family:var(--sans)}
+  .leaflet-popup-content{margin:14px 16px;font-size:.82rem;line-height:1.5}
+  .leaflet-popup-content .pt{font-family:var(--serif);font-size:1.15rem;font-weight:600;margin:0 0 2px}
+  .leaflet-popup-content .pr{font-style:italic;font-family:var(--serif);color:var(--ink-2);margin:0 0 8px}
+  .leaflet-popup-content a{color:var(--gold);font-weight:600;text-decoration:none}
+  .leaflet-popup-tip{background:var(--cream)}
+  .leaflet-container{font-family:var(--sans)}
+  .leaflet-control-attribution{font-size:.62rem;background:rgba(246,241,232,.85)}
+
+  /* notes */
+  .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,48px)}
+  .notes h4{font-family:var(--serif);font-weight:500;font-size:1.5rem;margin:0 0 10px}
+  .notes p{margin:0;font-size:.86rem;color:var(--ink-2)}
+  .notes p a{color:var(--ink)}
+  @media (max-width:820px){.notes{grid-template-columns:1fr}}
+
+  footer{padding:36px clamp(20px,4vw,56px) 44px;border-top:1px solid var(--line);font-size:.74rem;color:var(--ink-3);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+  footer a{color:var(--ink-3)}
+</style>
+</head>
+<body class="grain">
+
+<nav class="nav">
+  <a class="brand" href="#top">Puerto Rico, Christmas Week</a>
+  <div class="links">
+    <a href="#stays">The Shortlist</a>
+    <a href="#map">Map</a>
+    <a href="#notes">Fine Print</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <img src="img/hero-flamenco.jpg" alt="Aerial view of Flamenco Beach, Culebra, Puerto Rico" loading="eager" fetchpriority="high">
+  <div class="scrim"></div>
+  <div class="content">
+    <p class="eyebrow rise d1">23 to 27 December 2026 · Two adults, two children</p>
+    <h1 class="rise d2">Six ways to spend <em>Christmas</em> in Puerto Rico</h1>
+    <p class="rise d3">Every stay below has a bedroom for the grown-ups and a separate space for the kids. Priced for four nights, mapped, and linked to the exact room.</p>
+    <a class="cta rise d4" href="#stays">See the shortlist <span aria-hidden="true">↓</span></a>
+  </div>
+  <div class="credit">Flamenco Beach, Culebra. Photo: <a href="https://commons.wikimedia.org/wiki/File:Flamenco_Beach,_Culebra_Island,_Puerto_Rico.jpg" target="_blank" rel="noopener">Breezy Baldwin, CC BY 2.0</a></div>
+</header>
+
+<section class="section" id="stays">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <p class="eyebrow">The Shortlist</p>
+        <h2>Six rooms, in order of preference</h2>
+      </div>
+      <p class="meta">Rates pulled 3 September 2026 for Wed 23 to Sun 27 Dec. Holiday-week prices move; the booking links show today's number.</p>
+    </div>
+
+    <!-- 1 -->
+    <article class="stay reveal" id="stay-1">
+      <div class="stay-media">
+        <img src="https://images.trvl-media.com/lodging/92000000/91570000/91562100/91562080/f3f349d6.jpg?impolicy=resizecrop&rw=1600&ra=fit" alt="Las Casitas Village villa living room with ocean view">
+        <span class="num">1</span><span class="tag">Fajardo · East Coast</span>
+      </div>
+      <div class="stay-body">
+        <p class="where">Fajardo · 71 minutes from SJU</p>
+        <h3><a href="https://www.lascasitasvillage.com/" target="_blank" rel="noopener">Las Casitas Village at El Conquistador</a></h3>
+        <p class="room">Luxury Villa, One Bedroom, Garden View</p>
+        <ul class="facts"><li>King bedroom + living room with large twin sofa bed</li><li>Sleeps 4</li><li>Butler service</li><li>Water park and Palomino Island ferry</li></ul>
+        <div class="price">
+          <div class="n">$761<small>per night</small></div>
+          <div class="t"><strong>$3,862 total</strong> for four nights, taxes and resort fee included<br>$3,317 due today, $545 at the property</div>
+          <div class="note">Fully refundable until 20 December. Resort fee $125 per night.</div>
+        </div>
+        <div class="score"><b>9.2</b> Wonderful · 279 Expedia reviews · <a href="https://www.google.com/maps/search/?api=1&query=Las+Casitas+Village+at+El+Conquistador+Fajardo" target="_blank" rel="noopener">Google reviews</a></div>
+        <div class="actions">
+          <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Las-Casitas-Village-At-El-Conquistador.h91562080.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book on Expedia</a>
+          <a class="btn" href="https://www.lascasitasvillage.com/" target="_blank" rel="noopener">Hotel site</a>
+          <button class="btn map" data-fly="0">Show on map</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="stay reveal" id="stay-2">
+      <div class="stay-media">
+        <img src="https://images.trvl-media.com/lodging/1000000/980000/979700/979694/19acd880.jpg?impolicy=resizecrop&rw=1600&ra=fit" alt="Hyatt Regency Grand Reserve pool and palms">
+        <span class="num">2</span><span class="tag">Río Grande · Coco Beach</span>
+      </div>
+      <div class="stay-body">
+        <p class="where">Río Grande · 30 minutes from SJU</p>
+        <h3><a href="https://www.hyatt.com/hyatt-regency/en-US/sjurc-hyatt-regency-grand-reserve-puerto-rico" target="_blank" rel="noopener">Hyatt Regency Grand Reserve</a></h3>
+        <p class="room">Deluxe Villa, One King Bed</p>
+        <ul class="facts"><li>689 sq ft</li><li>King bedroom + living area with sleeper sofa</li><li>Sleeps 4</li><li>Largest lagoon pool on the island</li></ul>
+        <div class="price">
+          <div class="n">$1,091<small>per night</small></div>
+          <div class="t"><strong>$5,613 total</strong> for four nights, taxes and resort fee included<br>$4,757 due today, $856 at the property</div>
+          <div class="note">Non-refundable rate. Resort fee $196 per night. A refundable rate runs about $140 more per night.</div>
+        </div>
+        <div class="score"><b>9.2</b> Wonderful · 3,356 Expedia reviews · <a href="https://www.google.com/maps/search/?api=1&query=Hyatt+Regency+Grand+Reserve+Puerto+Rico" target="_blank" rel="noopener">Google reviews</a></div>
+        <div class="actions">
+          <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Hyatt-Regency-Grand-Reserve-Puerto-Rico.h979694.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book on Expedia</a>
+          <a class="btn" href="https://www.hyatt.com/hyatt-regency/en-US/sjurc-hyatt-regency-grand-reserve-puerto-rico" target="_blank" rel="noopener">Hotel site</a>
+          <button class="btn map" data-fly="1">Show on map</button>
+        </div>
+        <p class="caveat">World of Hyatt members: this is a Category 5 property, around 92,000 points for four peak nights, and the resort fee is waived on award stays.</p>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="stay reveal" id="stay-3">
+      <div class="stay-media">
+        <img src="https://images.trvl-media.com/lodging/1000000/10000/9300/9228/9307be9a.jpg?impolicy=resizecrop&rw=1600&ra=fit" alt="Caribe Hilton beach and gardens">
+        <span class="num">3</span><span class="tag">San Juan · Puerta de Tierra</span>
+      </div>
+      <div class="stay-body">
+        <p class="where">San Juan · 15 minutes from SJU</p>
+        <h3><a href="https://www.caribehilton.com/" target="_blank" rel="noopener">Caribe Hilton</a></h3>
+        <p class="room">Premium Suite, Panoramic Garden View, One King</p>
+        <ul class="facts"><li>850 sq ft</li><li>Separate living room</li><li>Sleeps 4</li><li>Walk to Old San Juan</li></ul>
+        <div class="price">
+          <div class="n">$1,436<small>per night</small></div>
+          <div class="t"><strong>$6,480 total</strong> for four nights, taxes and resort fee included<br>$6,262 due today, $218 at the property</div>
+          <div class="note">Non-refundable rate. Resort fee $50 per night, the lowest on this list.</div>
+        </div>
+        <div class="score"><b>8.6</b> Excellent · 3,089 Expedia reviews · <a href="https://www.google.com/maps/search/?api=1&query=Caribe+Hilton+San+Juan" target="_blank" rel="noopener">Google reviews</a></div>
+        <div class="actions">
+          <a class="btn primary" href="https://www.expedia.com/San-Juan-Hotels-Caribe-Hilton.h9228.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6" target="_blank" rel="noopener">Book on Expedia</a>
+          <a class="btn" href="https://www.caribehilton.com/" target="_blank" rel="noopener">Hotel site</a>
+          <button class="btn map" data-fly="2">Show on map</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="stay reveal" id="stay-4">
+      <div class="stay-media">
+        <img src="https://images.trvl-media.com/lodging/10000000/9110000/9105300/9105241/2628fada.jpg?impolicy=resizecrop&rw=1600&ra=fit" alt="Condado Vanderbilt Hotel facade and pool">
+        <span class="num">4</span><span class="tag">San Juan · Condado</span>
+      </div>
+      <div class="stay-body">
+        <p class="where">Condado · 12 minutes from SJU</p>
+        <h3><a href="https://www.condadovanderbilt.com/" target="_blank" rel="noopener">Condado Vanderbilt Hotel</a></h3>
+        <p class="room">King Suite with Ocean View</p>
+        <ul class="facts"><li>King bedroom + separate living room with sofa bed</li><li>Sleeps 4</li><li>Children under 12 stay free</li><li>Beachfront, 1919 landmark</li></ul>
+        <div class="price">
+          <div class="n">$1,260<small>per night</small></div>
+          <div class="t"><strong>$6,046</strong> for four nights, resort fee included<br>Plus 11% room tax, about $665, for roughly <strong>$6,711 all in</strong></div>
+          <div class="note">Free cancellation until 21 December. Breakfast optional at $45 per person.</div>
+        </div>
+        <div class="score"><b>8.4</b> Very Good · 374 Booking.com reviews · 9.4 on Expedia (1,841) · <a href="https://www.google.com/maps/search/?api=1&query=Condado+Vanderbilt+Hotel+San+Juan" target="_blank" rel="noopener">Google reviews</a></div>
+        <div class="actions">
+          <a class="btn primary" href="https://www.booking.com/hotel/pr/condado-vanderbilt-san-juan2.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book on Booking.com</a>
+          <a class="btn" href="https://www.condadovanderbilt.com/" target="_blank" rel="noopener">Hotel site</a>
+          <button class="btn map" data-fly="3">Show on map</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="stay reveal" id="stay-5">
+      <div class="stay-media">
+        <img src="https://images.trvl-media.com/lodging/1000000/50000/41700/41642/23d16164.jpg?impolicy=resizecrop&rw=1600&ra=fit" alt="Wyndham Grand Rio Mar pools and ocean">
+        <span class="num">5</span><span class="tag">Río Grande · Rio Mar</span>
+      </div>
+      <div class="stay-body">
+        <p class="where">Río Grande · 35 minutes from SJU</p>
+        <h3><a href="https://www.wyndhamriomar.com/" target="_blank" rel="noopener">Wyndham Grand Rio Mar</a></h3>
+        <p class="room">Discovery Suite</p>
+        <ul class="facts"><li>1,274 sq ft</li><li>King bedroom, bunk-bed alcove for the kids, living room with sofa bed</li><li>Built for families</li><li>El Yunque next door, two golf courses</li></ul>
+        <div class="price">
+          <div class="n">$1,750<small>per night</small></div>
+          <div class="t"><strong>$8,679</strong> for four nights, resort fee included<br>Plus 11% room tax, about $955, for roughly <strong>$9,634 all in</strong></div>
+          <div class="note">Free cancellation until 11 November. Breakfast for the family adds $240 per night.</div>
+        </div>
+        <div class="score"><b>8.8</b> Excellent · 400 Booking.com reviews · 8.6 on Expedia (2,282) · <a href="https://www.google.com/maps/search/?api=1&query=Wyndham+Grand+Rio+Mar+Rio+Grande+Puerto+Rico" target="_blank" rel="noopener">Google reviews</a></div>
+        <div class="actions">
+          <a class="btn primary" href="https://www.booking.com/hotel/pr/wyndham-grand-rio-mar-beach-resort-amp-spa.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book on Booking.com</a>
+          <a class="btn" href="https://www.wyndhamriomar.com/" target="_blank" rel="noopener">Hotel site</a>
+          <button class="btn map" data-fly="4">Show on map</button>
+        </div>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="stay reveal" id="stay-6">
+      <div class="stay-media">
+        <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/811135244.jpg?k=f44a4aea03b655b33dc261aaac824ebd62394b7e6dcccf3ccc7347ceaa170eea&o=" alt="La Concha Resort pool and ocean">
+        <span class="num">6</span><span class="tag">San Juan · Condado</span>
+      </div>
+      <div class="stay-body">
+        <p class="where">Condado · 12 minutes from SJU</p>
+        <h3><a href="https://www.laconcharesort.com/" target="_blank" rel="noopener">La Concha Resort, Autograph Collection</a></h3>
+        <p class="room">One-Bedroom Deluxe King Suite with Sofa Bed, Ocean View</p>
+        <ul class="facts"><li>King bedroom + living room with sofa bed</li><li>Kitchenette</li><li>Ocean-view balcony</li><li>Marriott Bonvoy</li></ul>
+        <div class="price">
+          <div class="n">$849<small>per night</small></div>
+          <div class="t"><strong>$3,654</strong> for four nights, resort fee included<br>Plus 11% room tax, about $402, for roughly <strong>$4,056 all in</strong></div>
+          <div class="note">Resort fee $65 per night. Cancellation terms vary by rate; check at booking.</div>
+        </div>
+        <div class="score"><b>8.9</b> Excellent · 493 Booking.com reviews · 4.4 on Google (6,500+) · <a href="https://www.google.com/maps/search/?api=1&query=La+Concha+Resort+San+Juan" target="_blank" rel="noopener">Google reviews</a></div>
+        <div class="actions">
+          <a class="btn primary" href="https://www.booking.com/hotel/pr/la-concha-renaissance-san-juan-resort.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1" target="_blank" rel="noopener">Book on Booking.com</a>
+          <a class="btn" href="https://www.laconcharesort.com/" target="_blank" rel="noopener">Hotel site</a>
+          <button class="btn map" data-fly="5">Show on map</button>
+        </div>
+        <p class="caveat">Booking.com lists this suite for a maximum of two adults. Confirm with the resort that two adults and two children are accepted before paying. A renovation is reported to wrap up around 20 December; ask about it.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="map-section" id="map-section">
+  <div class="section-head wrap reveal">
+    <div>
+      <p class="eyebrow">Where They Are</p>
+      <h2>From Condado to the east coast</h2>
+    </div>
+    <p class="meta">Three in San Juan, two in Río Grande by El Yunque, one in Fajardo. Click a pin or a name.</p>
+  </div>
+  <div class="map-shell">
+    <div id="map" role="region" aria-label="Map of the six hotels"></div>
+    <div class="legend" id="legend"></div>
+  </div>
+</section>
+
+<section class="section" id="notes">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <p class="eyebrow">Fine Print</p>
+        <h2>What the numbers include</h2>
+      </div>
+    </div>
+    <div class="notes reveal">
+      <div>
+        <h4>Taxes and fees</h4>
+        <p>Puerto Rico charges a <a href="https://tourism.pr.gov/room-tax/" target="_blank" rel="noopener">9% room tax</a> at hotels without a casino and 11% at those with one. Expedia totals on this page already include tax and the resort fee. Booking.com totals include the resort fee only, so the estimated tax is shown alongside.</p>
+      </div>
+      <div>
+        <h4>Refundable or not</h4>
+        <p>Non-refundable rates run 10 to 20 percent below flexible ones. Flexible rates at most of these properties can be cancelled into December, so booking flexible now and re-checking in November keeps every option open.</p>
+      </div>
+      <div>
+        <h4>Before you pay</h4>
+        <p>Ask each property whether a Christmas Eve or Christmas Day dinner is mandatory and what it costs. Confirm that two adults and two children are accepted in the room you pick, and note that holiday bookings usually become non-refundable 30 to 60 days out.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Prepared 3 September 2026. Rates and availability change daily.</span>
+  <span>Hotel photographs belong to the properties and are served by Expedia and Booking.com. Map imagery by <a href="https://www.esri.com/" target="_blank" rel="noopener">Esri</a>; map engine <a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a>.</span>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function(){
+  var stays=[
+    {n:1,name:"Las Casitas Village at El Conquistador",room:"Luxury Villa, One Bedroom, Garden View",price:"$761 / night · $3,862 total",lat:18.3589,lng:-65.6272,url:"https://www.expedia.com/San-Juan-Hotels-Las-Casitas-Village-At-El-Conquistador.h91562080.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6",area:"Fajardo"},
+    {n:2,name:"Hyatt Regency Grand Reserve",room:"Deluxe Villa, One King Bed",price:"$1,091 / night · $5,613 total",lat:18.4178,lng:-65.7942,url:"https://www.expedia.com/San-Juan-Hotels-Hyatt-Regency-Grand-Reserve-Puerto-Rico.h979694.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6",area:"Río Grande"},
+    {n:3,name:"Caribe Hilton",room:"Premium Suite, Panoramic Garden View",price:"$1,436 / night · $6,480 total",lat:18.4632,lng:-66.0855,url:"https://www.expedia.com/San-Juan-Hotels-Caribe-Hilton.h9228.Hotel-Information?chkin=2026-12-23&chkout=2026-12-27&rm1=a2%3Ac4%3Ac6",area:"San Juan"},
+    {n:4,name:"Condado Vanderbilt Hotel",room:"King Suite with Ocean View",price:"$1,260 / night · about $6,711 all in",lat:18.4576,lng:-66.0752,url:"https://www.booking.com/hotel/pr/condado-vanderbilt-san-juan2.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1",area:"Condado"},
+    {n:5,name:"Wyndham Grand Rio Mar",room:"Discovery Suite",price:"$1,750 / night · about $9,634 all in",lat:18.3885,lng:-65.7559,url:"https://www.booking.com/hotel/pr/wyndham-grand-rio-mar-beach-resort-amp-spa.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1",area:"Río Grande"},
+    {n:6,name:"La Concha Resort",room:"One-Bedroom Deluxe King Suite, Ocean View",price:"$849 / night · about $4,056 all in",lat:18.4573,lng:-66.0739,url:"https://www.booking.com/hotel/pr/la-concha-renaissance-san-juan-resort.html?checkin=2026-12-23&checkout=2026-12-27&group_adults=2&group_children=2&age=4&age=6&no_rooms=1",area:"Condado"}
+  ];
+  var map=L.map('map',{scrollWheelZoom:false,zoomControl:true});
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Imagery &copy; Esri, Maxar, Earthstar Geographics'}).addTo(map);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,opacity:.9}).addTo(map);
+  var markers=[], legend=document.getElementById('legend');
+  stays.forEach(function(s,i){
+    var icon=L.divIcon({className:'',html:'<div class="pin"><span>'+s.n+'</span></div>',iconSize:[34,34],iconAnchor:[17,34],popupAnchor:[0,-34]});
+    var m=L.marker([s.lat,s.lng],{icon:icon,title:s.name}).addTo(map);
+    m.bindPopup('<p class="pt">'+s.n+'. '+s.name+'</p><p class="pr">'+s.room+'</p><div>'+s.price+'</div><div style="margin-top:8px"><a href="#stay-'+s.n+'">Details</a> &nbsp;·&nbsp; <a href="'+s.url+'" target="_blank" rel="noopener">Book</a> &nbsp;·&nbsp; <a href="https://www.google.com/maps/dir/?api=1&destination='+s.lat+','+s.lng+'" target="_blank" rel="noopener">Directions</a></div>');
+    m.on('click',function(){setActive(i)});
+    markers.push(m);
+    var b=document.createElement('button'); b.type='button';
+    b.innerHTML='<span class="k">'+s.n+'</span><span>'+s.name+'<span class="s">'+s.area+' · '+s.price.split(' · ')[0]+'</span></span>';
+    b.addEventListener('click',function(){fly(i)});
+    legend.appendChild(b);
+  });
+  var group=L.featureGroup(markers); map.fitBounds(group.getBounds().pad(0.18));
+  function setActive(i){[].forEach.call(legend.children,function(c,j){c.classList.toggle('active',j===i)})}
+  function fly(i){var s=stays[i]; setActive(i); map.flyTo([s.lat,s.lng],14,{duration:1.2}); setTimeout(function(){markers[i].openPopup()},1250)}
+  document.querySelectorAll('[data-fly]').forEach(function(btn){btn.addEventListener('click',function(){var i=+btn.getAttribute('data-fly'); document.getElementById('map-section').scrollIntoView({behavior:'smooth'}); setTimeout(function(){fly(i)},500)})});
+  map.on('click',function(){map.scrollWheelZoom.enable()});
+  map.on('mouseout',function(){map.scrollWheelZoom.disable()});
+  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -10% 0px'});document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)})}else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')})}
+})();
+</script>
+</body>
+</html>
